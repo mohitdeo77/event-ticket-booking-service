@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: event-ticket-booking-service
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/booking}
+    username: ${DB_USER:booking}
+    password: ${DB_PASSWORD:booking}
+    hikari:
+      maximum-pool-size: 20
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      timeout: 500ms
+      repositories:
+        enabled: false
+
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+app:
+  scheduling:
+    enabled: true
+  reservation:
+    # How long seats stay held before they are released back to the pool
+    hold-ttl: PT10M
+    max-seats-per-reservation: 10
+    # How long a concurrent request with the same Idempotency-Key is blocked
+    idempotency-lock-ttl: PT30S
+    sweep-interval-ms: 15000
+    sweep-batch-size: 100

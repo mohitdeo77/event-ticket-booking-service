@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    # PostgreSQL compatibility mode; LOCK_TIMEOUT lets contending threads wait for row locks
+    url: jdbc:h2:mem:booking;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH;LOCK_TIMEOUT=10000
+    username: sa
+    password:
+    hikari:
+      maximum-pool-size: 32
+
+app:
+  scheduling:
+    enabled: false
+  reservation:
+    hold-ttl: PT5M
